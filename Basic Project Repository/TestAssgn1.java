@@ -6,7 +6,8 @@ import java.util.Properties;
 public class TestAssgn1{
     public static void main(String[] args){
         //addBook();
-        findBookWithTitleLike();
+        //findBookWithTitleLike();
+        findBooksPublishedBefore();
     }
 
     public static void addBook(){
@@ -60,6 +61,32 @@ public class TestAssgn1{
             }
         } finally {
             input.close(); // Close scanner to prevent resource leaks
+        }
+
+    }
+    public static void findBooksPublishedBefore(){
+        Scanner input = new Scanner(System.in);
+
+        try {
+            System.out.println("Enter a year: ");
+            String year = input.next();
+            BookCollection collection = new BookCollection();
+
+            try {
+                collection.findBooksOlderThanDate(year);
+                if (collection.getState("Books") == null || ((Vector<Book>) collection.getState("Books")).isEmpty()) {
+                    System.out.println("No books older than the given year: " + year);
+                } else {
+                    Vector<Book> books = (Vector<Book>) collection.getState("Books");
+                    for (Book book : books) {
+                        System.out.println(book.getState("bookTitle")); // Print book details
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Error retrieving books: " + e.getMessage());
+            }
+        }finally {
+           input.close();
         }
 
     }
