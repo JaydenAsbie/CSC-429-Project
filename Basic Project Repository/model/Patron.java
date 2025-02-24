@@ -225,6 +225,14 @@ public class Patron extends EntityBase implements IView
         return v;
     }
 
+    public String toString()
+    {
+        return "Name: " + persistentState.getProperty("name") + "; Address: " + persistentState.getProperty("address") +
+                "; City: " + persistentState.getProperty("city") + "; State Code: " + persistentState.getProperty("stateCode")
+                + "; Zip: " + persistentState.getProperty("zip") + "; Email: " + persistentState.getProperty("email") +
+                "; Date of Birth: " + persistentState.getProperty("dateOfBirth");
+    }
+
     //-----------------------------------------------------------------------------------
     protected void initializeSchema(String tableName)
     {
