@@ -6,7 +6,7 @@ import java.util.Properties;
 public class TestAssgn1{
     public static void main(String[] args){
         //addBook();
-        //findBookWithTitleLike();
+        findBookWithTitleLike();
         findBooksPublishedBefore();
     }
 
@@ -60,7 +60,7 @@ public class TestAssgn1{
                 System.out.println("Error retrieving books: " + e.getMessage());
             }
         } finally {
-            input.close(); // Close scanner to prevent resource leaks
+            //input.close(); // Close scanner to prevent resource leaks
         }
 
     }
@@ -69,7 +69,7 @@ public class TestAssgn1{
 
         try {
             System.out.println("Enter a year: ");
-            String year = input.next();
+            String year = input.nextLine();
             BookCollection collection = new BookCollection();
 
             try {
@@ -86,7 +86,7 @@ public class TestAssgn1{
                 System.out.println("Error retrieving books: " + e.getMessage());
             }
         }finally {
-           input.close();
+           //input.close();
         }
 
     }
