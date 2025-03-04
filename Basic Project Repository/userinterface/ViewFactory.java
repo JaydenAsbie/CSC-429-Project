@@ -11,6 +11,10 @@ public class ViewFactory {
 		{
 			return new TellerView(model);
 		}
+		else if(viewName.equals("LibrarianView") == true)
+		{
+			return new LibrarianView(model);
+		}
 		else if(viewName.equals("TransactionChoiceView") == true)
 		{
 			return new TransactionChoiceView(model);
