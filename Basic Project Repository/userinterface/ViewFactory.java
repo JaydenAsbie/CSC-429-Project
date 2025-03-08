@@ -11,6 +11,17 @@ public class ViewFactory {
 		{
 			return new TellerView(model);
 		}
+<<<<<<< Updated upstream
+=======
+		else if(viewName.equals("LibrarianView") == true)
+		{
+			return new LibrarianView(model);
+		}
+		else if(viewName.equals("PatronView") == true)
+		{
+			return new PatronView(model);
+		}
+>>>>>>> Stashed changes
 		else if(viewName.equals("TransactionChoiceView") == true)
 		{
 			return new TransactionChoiceView(model);

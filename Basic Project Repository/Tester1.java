@@ -12,14 +12,30 @@ import database.*;
 
 //java -cp mariadb-java-client-3.0.3.jar;classes;. ATM
 //To run Java FX
-public class Tester {
+public class Tester1 {
     public static void main(String[] args) throws Exception {
         JDBCBroker jdbcBroker = JDBCBroker.getInstance();
         jdbcBroker.getConnection();
+<<<<<<< Updated upstream:Basic Project Repository/Tester.java
         patronTest();
-        patronDate();
-        patronZip();
+=======
 
+        patronTest();
+        System.out.println();
+>>>>>>> Stashed changes:Basic Project Repository/Tester1.java
+        patronDate();
+        System.out.println();
+        patronZip();
+<<<<<<< Updated upstream:Basic Project Repository/Tester.java
+
+=======
+        System.out.println();
+        addBook();
+        System.out.println();
+        findBookWithTitleLike();
+        System.out.println();
+        findBooksPublishedBefore();
+>>>>>>> Stashed changes:Basic Project Repository/Tester1.java
     } // main
 
     // Insert a new Patron into the database
