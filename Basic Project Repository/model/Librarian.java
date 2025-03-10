@@ -16,6 +16,7 @@ import userinterface.View;
 import userinterface.ViewFactory;
 import userinterface.WindowPosition;
 import model.Patron;
+import model.Book;
 
 import java.util.Hashtable;
 import java.util.Properties;
@@ -129,7 +130,16 @@ public class Librarian implements IView, IModel
             Patron insertPatron = new Patron((Properties)value);
             insertPatron.save();
         }
-		else if (key.equals("Exit") == true)
+		else if(key.equals("BookView") == true)
+		{
+			createAndShowBookView();
+		}
+
+		else if(key.equals("InsertBook") == true)
+		{
+			Book insertBook = new Book((Properties)value);
+			insertBook.save();
+		}		else if (key.equals("Exit") == true)
 		{
 //			myAccountHolder = null;
 //			myViews.remove("TransactionChoiceView");
@@ -231,6 +241,22 @@ public class Librarian implements IView, IModel
 			View newView = ViewFactory.createView("PatronView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("PatronView", currentScene);
+		}
+
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+
+	}
+	private void createAndShowBookView(){
+		Scene currentScene = (Scene)myViews.get("BookView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("BookView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("BookView", currentScene);
 		}
 
 

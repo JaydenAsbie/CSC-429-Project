@@ -2,3 +2,8 @@
 [3/4/25 12:58 PM]|ATM|ATM.<init>|Error|NOTAG|null<Unable to create Teller object>
 [3/4/25 1:08 PM]|Library|ATM.<init>|Error|NOTAG|null<Unable to create Librarian object>
 [3/4/25 1:08 PM]|Library|ATM.<init>|Error|NOTAG|null<Unable to create Librarian object>
+[3/10/25 12:44 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1406: (conn=7605) Data too long for column 'pubYear' at row 1>
+[3/10/25 12:46 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1406: (conn=7605) Data too long for column 'pubYear' at row 1>
+[3/10/25 12:46 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1406: (conn=7605) Data too long for column 'pubYear' at row 1>
+[3/10/25 1:11 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1406: (conn=7797) Data too long for column 'pubYear' at row 1>
+[3/10/25 1:23 PM]|Book|insertAutoIncrementalPersistentState|Error|NOTAG|null<SQL Exception: 1406: (conn=7817) Data too long for column 'pubYear' at row 1>

@@ -12,7 +12,7 @@ import database.*;
 
 //java -cp mariadb-java-client-3.0.3.jar;classes;. ATM
 //To run Java FX
-public class Tester1 {
+/*public class Tester1 {
     public static void main(String[] args) throws Exception {
         JDBCBroker jdbcBroker = JDBCBroker.getInstance();
         jdbcBroker.getConnection();
@@ -117,4 +117,4 @@ public class Tester1 {
         }
     }
 
-}
+}*/
