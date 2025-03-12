@@ -154,8 +154,8 @@ public class Librarian implements IView, IModel
 			}catch(Exception e){
 				System.out.println("Something went wrong");
 			}
-			System.out.println(searchBook.getState("bookTitle"));
-			System.out.println("Test 1: " + value);
+			System.out.println((String)searchBook.getState("bookTitle"));
+			System.out.println("Test 1: " + (String)searchBook.getState("bookTitle"));
 			createAndShowBookCollectionView(newBookCollection);
 		}
 		else if (key.equals("Exit") == true)
