@@ -107,6 +107,16 @@ public class LibrarianView extends View
 			}
 		});
 
+		//Search Book
+		searchBooksButton = new Button("Search Book");
+		searchBooksButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("Test");
+				myModel.stateChangeRequest("BookSearchView",null);
+			}
+		});
+
 		// Finish
 		HBox done = new HBox(10);
 		done.setAlignment(Pos.CENTER);
@@ -120,7 +130,7 @@ public class LibrarianView extends View
 		});
 
 		// Put all the buttons in the VBox
-		vbox.getChildren().addAll(insertNewBook, insertNewPatron, doneButton);
+		vbox.getChildren().addAll(insertNewBook, insertNewPatron,searchBooksButton, doneButton);
 		return vbox;
 	}
 
