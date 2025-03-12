@@ -200,9 +200,6 @@ public class Book extends EntityBase implements IView
         v.addElement(persistentState.getProperty("author"));
         v.addElement(persistentState.getProperty("pubYear"));
         v.addElement(persistentState.getProperty("status"));
-        //v.addElement(persistentState.getProperty("Type"));
-        //v.addElement(persistentState.getProperty("Balance"));
-        //v.addElement(persistentState.getProperty("ServiceCharge"));
 
         return v;
     }
