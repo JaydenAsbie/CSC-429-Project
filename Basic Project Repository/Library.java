@@ -3,6 +3,7 @@
 
 // system imports
 
+import database.JDBCBroker;
 import event.Event;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 import model.Librarian;
 import userinterface.MainStageContainer;
 import userinterface.WindowPosition;
+import database.*;
 
 
 /** The class containing the main program  for the ATM application */
@@ -28,6 +30,8 @@ public class Library extends Application
 	public void start(Stage primaryStage)
 	{
 	   System.out.println("Library Version 1.00");
+	   JDBCBroker jdbcBroker = JDBCBroker.getInstance();
+	   jdbcBroker.getConnection();
 
            // Create the top-level container (main frame) and add contents to it.
 	   MainStageContainer.setStage(primaryStage, "Brockport Library Version 1.00");

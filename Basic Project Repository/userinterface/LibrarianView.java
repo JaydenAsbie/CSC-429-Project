@@ -28,8 +28,8 @@ public class LibrarianView extends View
 	// GUI components
 	protected Button insertNewBook;
 	protected Button insertNewPatron;
-	protected Button searchBooksButton;
-	protected Button searchPatronsButton;
+	protected Button searchBooks;
+	protected Button searchPatrons;
 
 	protected Button doneButton;
 
@@ -106,6 +106,15 @@ public class LibrarianView extends View
 			}
 		});
 
+		// Search Patrons
+		searchPatrons = new Button("Search Patrons");
+		searchPatrons.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				myModel.stateChangeRequest("PatronSearchView", null);
+			}
+		});
+
 		// Finish
 		HBox done = new HBox(10);
 		done.setAlignment(Pos.CENTER);
@@ -113,13 +122,13 @@ public class LibrarianView extends View
 		doneButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Bye Bye Ryan and Jayden");
+				System.out.println("Closing Application");
 				myModel.stateChangeRequest("Exit", null);
 			}
 		});
 
 		// Put all the buttons in the VBox
-		vbox.getChildren().addAll(insertNewBook, insertNewPatron, doneButton);
+		vbox.getChildren().addAll(insertNewBook, insertNewPatron, searchPatrons, doneButton);
 		return vbox;
 	}
 

@@ -11,10 +11,9 @@ import impresario.IView;
 import impresario.ModelRegistry;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import userinterface.MainStageContainer;
-import userinterface.View;
-import userinterface.ViewFactory;
-import userinterface.WindowPosition;
+import userinterface.*;
+import model.Patron;
+import model.PatronCollection;
 
 import java.util.Hashtable;
 import java.util.Properties;
@@ -31,6 +30,7 @@ public class Librarian implements IView, IModel
 	private ModelRegistry myRegistry;
 
 	private AccountHolder myAccountHolder;
+	private PatronCollectionView pColl;
 
 	// GUI Components
 	private Hashtable<String, Scene> myViews;
@@ -116,44 +116,31 @@ public class Librarian implements IView, IModel
 		// STEP 4: Write the sCR method component for the key you
 		// just set up dependencies for
 		// DEBUG System.out.println("Teller.sCR: key = " + key);
-
-		if (key.equals("Login") == true)
-		{
-			if (value != null)
-			{
-				loginErrorMessage = "";
-
-				boolean flag = loginAccountHolder((Properties)value);
-				if (flag == true)
-				{
-					createAndShowTransactionChoiceView();
-				}
-			}
+		if(key.equals("PatronView") == true){
+			createAndShowPatronView();
 		}
-		else
-		if (key.equals("CancelTransaction") == true)
-		{
-			createAndShowTransactionChoiceView();
-		}
-		else
-		if ((key.equals("Deposit") == true) || (key.equals("Withdraw") == true) ||
-			(key.equals("Transfer") == true) || (key.equals("BalanceInquiry") == true) ||
-			(key.equals("ImposeServiceCharge") == true))
-		{
-			String transType = key;
-
-			if (myAccountHolder != null)
-			{
-				doTransaction(transType);
-			}
-			else
-			{
-				transactionErrorMessage = "Transaction impossible: Customer not identified";
-			}
-
-		}
-		else
-		if (key.equals("Exit") == true)
+        else if(key.equals("LibrarianView") == true)
+        {
+            createAndShowLibrarianView();
+        }
+        else if(key.equals("InsertPatron") == true)
+        {
+            Patron insertPatron = new Patron((Properties)value);
+            insertPatron.save();
+        }
+        else if(key.equals("PatronSearchView") == true)
+        {
+            createAndShowPatronSearchView();
+        }
+        else if(key.equals("PatronSearch") == true)
+        {
+			//if(pColl != null) pColl.clearTable();
+			PatronCollection newPatronCollection = new PatronCollection();
+            newPatronCollection.findPatronsAtZipCode((String)value);
+			System.out.println("Test 1: " + value);
+            createAndShowPatronCollectionView(newPatronCollection);
+        }
+		else if (key.equals("Exit") == true)
 		{
 //			myAccountHolder = null;
 //			myViews.remove("TransactionChoiceView");
@@ -174,74 +161,23 @@ public class Librarian implements IView, IModel
 		stateChangeRequest(key, value);
 	}
 
-	/**
-	 * Login AccountHolder corresponding to user name and password.
-	 */
 	//----------------------------------------------------------
-	public boolean loginAccountHolder(Properties props)
+	private void createAndShowPatronView()
 	{
-		try
-		{
-			myAccountHolder = new AccountHolder(props);
-			// DEBUG System.out.println("Account Holder: " + myAccountHolder.getState("Name") + " successfully logged in");
-			return true;
-		}
-		catch (InvalidPrimaryKeyException ex)
-		{
-				loginErrorMessage = "ERROR: " + ex.getMessage();
-				return false;
-		}
-		catch (PasswordMismatchException exec)
-		{
+		Scene currentScene = (Scene)myViews.get("PatronView");
 
-				loginErrorMessage = "ERROR: " + exec.getMessage();
-				return false;
-		}
-	}
-
-
-	/**
-	 * Create a Transaction depending on the Transaction type (deposit,
-	 * withdraw, transfer, etc.). Use the AccountHolder holder data to do the
-	 * create.
-	 */
-	//----------------------------------------------------------
-	public void doTransaction(String transactionType)
-	{
-		try
-		{
-			Transaction trans = TransactionFactory.createTransaction(
-				transactionType, myAccountHolder);
-
-			trans.subscribe("CancelTransaction", this);
-			trans.stateChangeRequest("DoYourJob", "");
-		}
-		catch (Exception ex)
-		{
-			transactionErrorMessage = "FATAL ERROR: TRANSACTION FAILURE: Unrecognized transaction!!";
-			new Event(Event.getLeafLevelClassName(this), "createTransaction",
-					"Transaction Creation Failure: Unrecognized transaction " + ex.toString(),
-					Event.ERROR);
-		}
-	}
-
-	//----------------------------------------------------------
-	private void createAndShowTransactionChoiceView()
-	{
-		Scene currentScene = (Scene)myViews.get("TransactionChoiceView");
-		
 		if (currentScene == null)
 		{
 			// create our initial view
-			View newView = ViewFactory.createView("TransactionChoiceView", this); // USE VIEW FACTORY
+			View newView = ViewFactory.createView("PatronView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
-			myViews.put("TransactionChoiceView", currentScene);
+			myViews.put("PatronView", currentScene);
 		}
-				
+
 
 		// make the view visible by installing it into the frame
 		swapToView(currentScene);
-		
+
 	}
 
 	//------------------------------------------------------------
@@ -261,6 +197,45 @@ public class Librarian implements IView, IModel
 		
 	}
 
+    //------------------------------------------------------------
+    private void createAndShowPatronSearchView()
+    {
+        Scene currentScene = (Scene)myViews.get("PatronSearchView");
+
+        if (currentScene == null)
+        {
+            // create our initial view
+            View newView = ViewFactory.createView("PatronSearchView", this); // USE VIEW FACTORY
+            currentScene = new Scene(newView);
+            myViews.put("PatronSearchView", currentScene);
+        }
+
+        swapToView(currentScene);
+
+    }
+
+    //------------------------------------------------------------
+    private void createAndShowPatronCollectionView(PatronCollection newPatronCollection)
+    {
+		Scene currentScene = (Scene)myViews.get("PatronCollectionView");
+
+		System.out.println("Test 4");
+
+        if (currentScene == null)
+        {
+            // create our initial view
+            View newView = ViewFactory.createView("PatronCollectionView", this); // USE VIEW FACTORY
+            currentScene = new Scene(newView);
+            myViews.put("PatronCollectionView", currentScene);
+			pColl = (PatronCollectionView) newView;
+			System.out.println("Test 3: " + (newPatronCollection != null));
+        }
+		pColl.updateTable(newPatronCollection);
+
+
+        swapToView(currentScene);
+    }
+
 
 	/** Register objects to receive state updates. */
 	//----------------------------------------------------------
@@ -279,8 +254,6 @@ public class Librarian implements IView, IModel
 		// forward to our registry
 		myRegistry.unSubscribe(key, subscriber);
 	}
-
-
 
 	//-----------------------------------------------------------------------------
 	public void swapToView(Scene newScene)
