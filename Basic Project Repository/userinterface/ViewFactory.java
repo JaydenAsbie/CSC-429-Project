@@ -27,6 +27,16 @@ public class ViewFactory {
 		{
 			return new PatronCollectionView(model);
 		}
+		else if(viewName.equals("BookView") == true)
+		{
+			return new BookView(model);
+		}
+		else if(viewName.equals("BookSearchView") == true){
+			return new BookSearchView(model);
+		}
+		else if(viewName.equals("BookCollectionView") == true){
+			return new BookCollectionView(model);
+		}
 		else if(viewName.equals("TransactionChoiceView") == true)
 		{
 			return new TransactionChoiceView(model);

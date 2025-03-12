@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import userinterface.*;
 import model.Patron;
 import model.PatronCollection;
+import model.Book;
 
 import java.util.Hashtable;
 import java.util.Properties;
@@ -31,6 +32,7 @@ public class Librarian implements IView, IModel
 
 	private AccountHolder myAccountHolder;
 	private PatronCollectionView pColl;
+	private BookCollectionView bColl;
 
 	// GUI Components
 	private Hashtable<String, Scene> myViews;
@@ -140,6 +142,35 @@ public class Librarian implements IView, IModel
 			System.out.println("Test 1: " + value);
             createAndShowPatronCollectionView(newPatronCollection);
         }
+		else if(key.equals("BookView") == true)
+		{
+			createAndShowBookView();
+		}
+		else if(key.equals("BookSearchView")== true){
+			createAndShowBookSearchView();
+		}
+		/*else if(key.equals("BookCollectionView")){
+			createAndShowBookCollectionView();
+		}*/
+
+		else if(key.equals("InsertBook") == true)
+		{
+			Book insertBook = new Book((Properties)value);
+			insertBook.save();
+		}
+		else if(key.equals("SearchBook") == true){
+			Book searchBook = new Book((Properties) value);
+			BookCollection newBookCollection = new BookCollection();
+			try {
+				newBookCollection.findBooksWithTitleLike((String)searchBook.getState("bookTitle"));
+				System.out.println(searchBook.getState("bookTitle"));
+			}catch(Exception e){
+				System.out.println("Something went wrong");
+			}
+			System.out.println((String)searchBook.getState("bookTitle"));
+			System.out.println("Test 1: " + (String)searchBook.getState("bookTitle"));
+			createAndShowBookCollectionView(newBookCollection);
+		}
 		else if (key.equals("Exit") == true)
 		{
 //			myAccountHolder = null;
@@ -172,6 +203,56 @@ public class Librarian implements IView, IModel
 			View newView = ViewFactory.createView("PatronView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("PatronView", currentScene);
+		}
+
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+
+	}
+	private void createAndShowBookView(){
+		Scene currentScene = (Scene)myViews.get("BookView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("BookView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("BookView", currentScene);
+		}
+
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+
+	}
+	private void createAndShowBookCollectionView(BookCollection newBookCollection){
+		Scene currentScene = (Scene)myViews.get("BookCollectionView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("BookCollectionView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("BookCollectionView", currentScene);
+			bColl = (BookCollectionView) newView;
+			System.out.println("test collection != null: " + (newBookCollection != null));
+		}
+		bColl.updateTable(newBookCollection);
+
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+	}
+	private void createAndShowBookSearchView(){
+		Scene currentScene = (Scene)myViews.get("BookSearchView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("BookSearchView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("BookSearchView", currentScene);
 		}
 
 

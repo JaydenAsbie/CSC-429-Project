@@ -28,8 +28,8 @@ public class LibrarianView extends View
 	// GUI components
 	protected Button insertNewBook;
 	protected Button insertNewPatron;
-	protected Button searchBooks;
-	protected Button searchPatrons;
+	protected Button searchBooksButton;
+	protected Button searchPatronsButton;
 
 	protected Button doneButton;
 
@@ -102,6 +102,7 @@ public class LibrarianView extends View
 		insertNewPatron.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				System.out.println("Test 1");
 				myModel.stateChangeRequest("PatronView", null);
 			}
 		});
@@ -112,6 +113,16 @@ public class LibrarianView extends View
 			@Override
 			public void handle(ActionEvent event) {
 				myModel.stateChangeRequest("PatronSearchView", null);
+			}
+		});
+
+		//Search Book
+		searchBooksButton = new Button("Search Book");
+		searchBooksButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("Test");
+				myModel.stateChangeRequest("BookSearchView",null);
 			}
 		});
 
@@ -128,7 +139,7 @@ public class LibrarianView extends View
 		});
 
 		// Put all the buttons in the VBox
-		vbox.getChildren().addAll(insertNewBook, insertNewPatron, searchPatrons, doneButton);
+		vbox.getChildren().addAll(insertNewBook, insertNewPatron, searchPatronsButton, searchBooksButton doneButton);
 		return vbox;
 	}
 
