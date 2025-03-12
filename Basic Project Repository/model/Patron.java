@@ -33,7 +33,6 @@ public class Patron extends EntityBase implements IView
     // constructor for this class
     //----------------------------------------------------------
     public Patron(String patronId)
-            throws InvalidPrimaryKeyException
     {
         super(myTableName);
 
@@ -46,39 +45,21 @@ public class Patron extends EntityBase implements IView
         if (allDataRetrieved != null)
         {
             int size = allDataRetrieved.size();
+            Properties retrievedPatronData = allDataRetrieved.elementAt(0);
+            persistentState = new Properties();
 
-            // There should be EXACTLY one account. More than that is an error
-            if (size != 1)
+            Enumeration allKeys = retrievedPatronData.propertyNames();
+            while (allKeys.hasMoreElements() == true)
             {
-                throw new InvalidPrimaryKeyException("Multiple accounts matching id : "
-                        + patronId + " found.");
-            }
-            else
-            {
-                // copy all the retrieved data into persistent state
-                Properties retrievedPatronData = allDataRetrieved.elementAt(0);
-                persistentState = new Properties();
+                String nextKey = (String)allKeys.nextElement();
+                String nextValue = retrievedPatronData.getProperty(nextKey);
+                // patronId = Integer.parseInt(retrievedPatronData.getProperty("patronId"));
 
-                Enumeration allKeys = retrievedPatronData.propertyNames();
-                while (allKeys.hasMoreElements() == true)
+                if (nextValue != null)
                 {
-                    String nextKey = (String)allKeys.nextElement();
-                    String nextValue = retrievedPatronData.getProperty(nextKey);
-                    // patronId = Integer.parseInt(retrievedPatronData.getProperty("patronId"));
-
-                    if (nextValue != null)
-                    {
-                        persistentState.setProperty(nextKey, nextValue);
-                    }
+                    persistentState.setProperty(nextKey, nextValue);
                 }
-
             }
-        }
-        // If no account found for this user name, throw an exception
-        else
-        {
-            throw new InvalidPrimaryKeyException("No account matching id : "
-                    + patronId + " found.");
         }
     }
 

@@ -46,7 +46,6 @@ public class PatronView extends View
 	public PatronView(IModel patron)
 	{
 		super(patron, "PatronView");
-		System.out.println("Test 2");
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -96,6 +95,7 @@ public class PatronView extends View
 
         Label nameL = new Label("Name:");
 		name = new TextField();
+		name.setPromptText("Name");
 
 		Label addressL = new Label("Address:");
 		address = new TextField();
@@ -115,25 +115,35 @@ public class PatronView extends View
 		Label dateOfBirthL = new Label("Date of Birth (YYYY-MM-DD):");
 		dateOfBirth = new TextField();
 
-		Label statusL = new Label("Status:");
-		ComboBox<String> statusCB = new ComboBox<>();
-		statusCB.getItems().addAll("Active", "Inactive");
-
 		Button submit = new Button("Submit");
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Properties insertProp = new Properties();
+				if(name.getText().isEmpty()) name.setText("Default Name");
                 insertProp.setProperty("name", name.getText());
-                insertProp.setProperty("address", address.getText());
-                insertProp.setProperty("city", city.getText());
-                insertProp.setProperty("stateCode", stateCode.getText());
-                insertProp.setProperty("zip", zip.getText());
-                insertProp.setProperty("email", email.getText());
-                insertProp.setProperty("dateOfBirth", dateOfBirth.getText());
-                insertProp.setProperty("status", statusCB.getValue());
-                myModel.stateChangeRequest("InsertPatron", insertProp);
 
+				if(address.getText().isEmpty()) address.setText("Default Address");
+                insertProp.setProperty("address", address.getText());
+
+				if(city.getText().isEmpty()) city.setText("Default City");
+                insertProp.setProperty("city", city.getText());
+
+				if(stateCode.getText().isEmpty()) stateCode.setText("NA");
+                insertProp.setProperty("stateCode", stateCode.getText());
+
+				if(zip.getText().isEmpty()) zip.setText("00000");
+                insertProp.setProperty("zip", zip.getText());
+
+				if(email.getText().isEmpty()) email.setText("default@email.com");
+                insertProp.setProperty("email", email.getText());
+
+				if(dateOfBirth.getText().isEmpty()) dateOfBirth.setText("2000/01/01");
+                insertProp.setProperty("dateOfBirth", dateOfBirth.getText());
+
+                insertProp.setProperty("status", "Active");
+
+                myModel.stateChangeRequest("InsertPatron", insertProp);
                 myModel.stateChangeRequest("LibrarianView", null);
             }
         });
@@ -160,8 +170,6 @@ public class PatronView extends View
 		grid.add(email, 1, 5);
 		grid.add(dateOfBirthL, 0, 6);
 		grid.add(dateOfBirth, 1, 6);
-		grid.add(statusL, 0, 7);
-		grid.add(statusCB, 1, 7);
 		grid.add(done, 0, 8);
 		grid.add(submit, 1, 8);
 

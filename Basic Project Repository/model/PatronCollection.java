@@ -47,7 +47,7 @@ public class PatronCollection  extends EntityBase implements IView
         processQuery(query);
     }
 
-    public void findPatronsAtZipCode(String zip) throws Exception
+    public void findPatronsAtZipCode(String zip)
     {
         String query = "SELECT * FROM " + myTableName + " WHERE zip = '" + zip + "'";
         processQuery(query);
@@ -60,7 +60,7 @@ public class PatronCollection  extends EntityBase implements IView
     }
 
     //----------------------------------------------------------------------------------
-    private void processQuery(String query) throws Exception
+    private void processQuery(String query)
     {
         Vector data = getSelectQueryResult(query);
         if(data != null) {
@@ -70,8 +70,6 @@ public class PatronCollection  extends EntityBase implements IView
                 Patron p = new Patron(nextPatron);
                 if (p != null) addPatron(p);
             }
-        }else{
-            throw new InvalidPrimaryKeyException("No patrons found for query: " + query);
         }
     }
 
