@@ -16,26 +16,19 @@ import database.*;
     public static void main(String[] args) throws Exception {
         JDBCBroker jdbcBroker = JDBCBroker.getInstance();
         jdbcBroker.getConnection();
-<<<<<<< Updated upstream:Basic Project Repository/Tester.java
         patronTest();
-=======
 
         patronTest();
         System.out.println();
->>>>>>> Stashed changes:Basic Project Repository/Tester1.java
         patronDate();
         System.out.println();
         patronZip();
-<<<<<<< Updated upstream:Basic Project Repository/Tester.java
-
-=======
         System.out.println();
-        addBook();
+        //addBook();
         System.out.println();
-        findBookWithTitleLike();
+        //findBookWithTitleLike();
         System.out.println();
-        findBooksPublishedBefore();
->>>>>>> Stashed changes:Basic Project Repository/Tester1.java
+        //findBooksPublishedBefore();
     } // main
 
     // Insert a new Patron into the database

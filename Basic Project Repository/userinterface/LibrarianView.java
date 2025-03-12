@@ -107,6 +107,15 @@ public class LibrarianView extends View
 			}
 		});
 
+		// Search Patrons
+		searchPatrons = new Button("Search Patrons");
+		searchPatrons.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				myModel.stateChangeRequest("PatronSearchView", null);
+			}
+		});
+
 		//Search Book
 		searchBooksButton = new Button("Search Book");
 		searchBooksButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -130,7 +139,7 @@ public class LibrarianView extends View
 		});
 
 		// Put all the buttons in the VBox
-		vbox.getChildren().addAll(insertNewBook, insertNewPatron,searchBooksButton, doneButton);
+		vbox.getChildren().addAll(insertNewBook, insertNewPatron, searchPatronsButton, searchBooksButton doneButton);
 		return vbox;
 	}
 
